@@ -77,7 +77,7 @@ function Forum() {
 
                 >
                     <Input id='lastName' {...register('lastName')} placeholder='Type your last name' />
-                    <span className='err'>{errors.firstName?.message}</span>
+                    <span className='err'>{errors.lastName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Username'
@@ -87,7 +87,7 @@ function Forum() {
                         { required: true }, { whitespace: true }, { message: 'its false' }
                     ]}
                 >
-                    <Input id='userName' {...register('userName')} placeholder='Type your username' />  <span className='err'>{errors.firstName?.message}</span>
+                    <Input id='userName' {...register('userName')} placeholder='Type your username' />  <span className='err'>{errors.userName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Email'
@@ -97,7 +97,7 @@ function Forum() {
                         { required: true }, { whitespace: true }, { type: 'email' }
                     ]}
                 >
-                    <Input placeholder='Type your email' /><span className='err'>{errors.firstName?.message}</span>
+                    <Input id='email' placeholder='Type your email' /><span className='err'>{errors.email?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Password'
@@ -107,7 +107,7 @@ function Forum() {
                         { required: true }, { whitespace: true }, { min: 7 }
                     ]}
                 >
-                    <Input.Password placeholder='Type your password' /><span className='err'>{errors.firstName?.message}</span>
+                    <Input.Password id='password' placeholder='Type your password' /><span className='err'>{errors.password?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Gender'
