@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
+import { useForm } from 'react-hook-form'
 import './Forum.css'
 import {
     DatePicker,
@@ -33,14 +34,10 @@ const formItemLayout = {
 };
 
 function Forum() {
-    const [lastName, setLastName] = useState('')
-    const [validError, setValidError] = useState(false)
-    const addFeedback = (e) => {
-        e.preventDefault()
-        if (lastName.length == 0) {
-            setValidError(true)
-        }
-    }
+    const form = useForm()
+    const { register, formState } = form;
+    const { errors } = formState;
+
     return (
         <div className="myForm">
 
@@ -58,15 +55,16 @@ function Forum() {
                 }}
             >
                 <Form.Item
-                    name='First name'
+                    name='Firstname'
                     label="First name"
-                    help="Should be combination of numbers & alphabets"
+                    // help="Should be combination of numbers & alphabets"
                     hasFeedback
                     rules={[
                         { required: true }, { whitespace: true }
                     ]}
                 >
-                    <Input placeholder='Type your name' />
+                    <Input id='firstName' {...register('firstname')} placeholder='Type your name' />
+                    <span className='err'>{errors.firstName?.message}</span>
                 </Form.Item>
                 <Form.Item
 
@@ -78,18 +76,18 @@ function Forum() {
                     ]}
 
                 >
-                    <Input  onChange={(e) =>setLastName(e.target.value) } placeholder='Type your last name' />
-                    {validError ? <span className='err'>You should fulfil this input</span> : ''}
+                    <Input id='lastName' {...register('lastName')} placeholder='Type your last name' />
+                    <span className='err'>{errors.firstName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Username'
                     label="Username"
                     help="Should be combination of numbers & alphabets"
                     rules={[
-                        { required: true }, { whitespace: true }
+                        { required: true }, { whitespace: true }, { message: 'its false' }
                     ]}
                 >
-                    <Input placeholder='Type your username' />
+                    <Input id='userName' {...register('userName')} placeholder='Type your username' />  <span className='err'>{errors.firstName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Email'
@@ -99,7 +97,7 @@ function Forum() {
                         { required: true }, { whitespace: true }, { type: 'email' }
                     ]}
                 >
-                    <Input placeholder='Type your email' />
+                    <Input placeholder='Type your email' /><span className='err'>{errors.firstName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Password'
@@ -109,7 +107,7 @@ function Forum() {
                         { required: true }, { whitespace: true }, { min: 7 }
                     ]}
                 >
-                    <Input.Password placeholder='Type your password' />
+                    <Input.Password placeholder='Type your password' /><span className='err'>{errors.firstName?.message}</span>
                 </Form.Item>
                 <Form.Item
                     name='Gender'
@@ -172,7 +170,7 @@ function Forum() {
                     </Checkbox>
                 </Form.Item>
                 <Form.Item>
-                    <Button type='primary' htmlType='submit' onClick={addFeedback}>
+                    <Button type='primary' htmlType='submit'>
                         Submit
                     </Button>
                 </Form.Item>
