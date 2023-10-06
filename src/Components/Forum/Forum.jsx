@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import './Forum.css'
 import {
     DatePicker,
@@ -33,16 +33,19 @@ const formItemLayout = {
 };
 
 function Forum() {
-    const [submitted, setSubmitted] = useState(false)
-    const addFeedback = () => {
-        setSubmitted(submitted == true)
+    const [lastName, setLastName] = useState('')
+    const [validError, setValidError] = useState(false)
+    const addFeedback = (e) => {
+        e.preventDefault()
+        if (lastName.length == 0) {
+            setValidError(true)
+        }
     }
     return (
         <div className="myForm">
 
 
-            <Form onSubmit={(e)=>e.preventDefault()} autoComplete='off'
-            
+            <Form autoComplete='off'
                 {...formItemLayout}
                 onFinish={(myFormData) => {
                     console.log({ myFormData });
@@ -69,13 +72,14 @@ function Forum() {
 
                     name='Last name'
                     label="Last name"
-                    help="Should be combination of numbers & alphabets"
+                    // help="Should be combination of numbers & alphabets"
                     rules={[
                         { required: true }, { whitespace: true }
                     ]}
-                    className={(submitted) ? 'hasFeedback' : null}
+
                 >
-                    <Input placeholder='Type your last name' />
+                    <Input  onChange={(e) =>setLastName(e.target.value) } placeholder='Type your last name' />
+                    {validError ? <span className='err'>You should fulfil this input</span> : ''}
                 </Form.Item>
                 <Form.Item
                     name='Username'
@@ -168,7 +172,7 @@ function Forum() {
                     </Checkbox>
                 </Form.Item>
                 <Form.Item>
-                    <Button  type='primary' htmlType='submit' onClick={addFeedback}>
+                    <Button type='primary' htmlType='submit' onClick={addFeedback}>
                         Submit
                     </Button>
                 </Form.Item>
